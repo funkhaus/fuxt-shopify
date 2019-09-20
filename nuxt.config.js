@@ -17,19 +17,7 @@ export default {
         link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }]
     },
 
-    /*
-     ** Customize the progress-bar color
-     ** See: https://nuxtjs.org/api/configuration-loading#use-a-custom-loading-component
-     */
-    loading: {},
-    /*
-     ** Global CSS
-     */
-    css: [
-        "~/styles/base.scss",
-        "~/styles/transitions.scss"
-        //'~/styles/fonts.css'
-    ],
+    css: ["~/styles/base.scss", "~/styles/transitions.scss"],
 
     /*
      ** Plugins to load before mounting the App
@@ -45,11 +33,7 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: [
-        "@nuxtjs/apollo",
-        "@nuxtjs/style-resources",
-        "nuxt-basic-auth-module"
-    ],
+    modules: ["@nuxtjs/apollo", "@nuxtjs/style-resources"],
 
     /*
      ** Load scss globally via styleResources
@@ -67,9 +51,7 @@ export default {
             default: {
                 httpEndpoint:
                     "http://stackhaus-backend.flywheelsites.com/graphql",
-                tokenName: "apollo-token",
-                persisting: false,
-                websocketsOnly: false
+                persisting: false
             },
             shopify: {
                 httpEndpoint:
@@ -81,9 +63,7 @@ export default {
                             "41df419c5323c953aa29bf90312e15a1"
                     }
                 },
-                tokenName: "apollo-token",
-                persisting: false,
-                websocketsOnly: false
+                persisting: false
             }
         }
     },
@@ -94,13 +74,6 @@ export default {
     router: {
         linkExactActiveClass: "exact-active-link",
         linkActiveClass: "active-link"
-        // Example to override router functionality
-        //     extendRoutes (routes, resolve) {
-        //     routes.push({
-        //       name: '404',
-        //       path: '*',
-        //       component: resolve(__dirname, 'pages/404.vue')
-        //     })
     },
 
     /*
@@ -120,14 +93,5 @@ export default {
             // If you don't use the <wp-content> component, then you can delete this safely.
             config.resolve.alias["vue$"] = "vue/dist/vue.esm.js"
         }
-    },
-
-    /*
-     ** Basic (htaccess) authentication configuration
-     */
-    basic: {
-        name: "funkhaus",
-        pass: "12345", // https://youtu.be/a6iW-8xPw3k
-        enabled: false
     }
 }
