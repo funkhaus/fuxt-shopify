@@ -2,7 +2,9 @@
 <template>
     <main :class="classes">
         <!-- Header goes here -->
-        <site-hamburger />
+        <!-- <site-hamburger /> -->
+
+        <site-icon-cart />
 
         <nuxt />
         <!-- Footer goes here -->
@@ -10,11 +12,17 @@
 </template>
 
 <script>
+import Vue from "vue"
 import _throttle from "lodash/throttle"
 import _kebabCase from "lodash/kebabCase"
 import { decodeHtmlEntity } from "~/utils/tools"
 
+import siteIconCart from "~/components/site/IconCart"
+
 export default {
+    components: {
+        siteIconCart
+    },
     head() {
         return {
             bodyAttrs: {
@@ -39,9 +47,7 @@ export default {
                 },
                 {
                     property: "og:url",
-                    content: `${this.$store.state.siteMeta.host}${
-                        this.$route.path
-                    }`
+                    content: `${this.$store.state.siteMeta.host}${this.$route.path}`
                 },
                 {
                     property: "og:site_name",
