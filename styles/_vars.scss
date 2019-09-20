@@ -1,24 +1,28 @@
 // Sass constants
 $white: #ffffff;
 $black: #000000;
+$black-secondary: #222222;
+$light-grey: #f1f1f1;
+$grey: #999999;
+$blue: #0376ff;
 $font-family: sans-serif;
 
 // $desktop-padding: 50px;
 // $mobile-padding: 20px;
 // $header-height: 80px;
-// $max-cinema: 1800px;
-// $max-desktop: 1200px;
+$max-cinema: 1600px;
 // $max-tablet: 900px;
 // $max-phone: 750px;
 // $max-mini: 480px;
 
 // Breakpoints
-// $gt-cinema: 'only screen and (min-width: 1800px)';
-// $lt-desktop: 'only screen and (max-width: 1100px)';
-// $lt-tablet: 'only screen and (max-width: 1024px)';
-// $lt-phone: 'only screen and (max-width: 750px)';
-// $lt-phone-landscape: 'only screen and (max-width: 750px) and (orientation: landscape)';
-// $ipad: 'only screen and (min-device-width : 768px) and (max-device-width : 1024px)';
+$gt-cinema: "only screen and (min-width: 1600px)";
+$lt-desktop: "only screen and (max-width: 1100px)";
+$lt-tablet: "only screen and (max-width: 1024px)";
+$lt-phone: "only screen and (max-width: 750px)";
+$lt-phone-landscape: "only screen and (max-width: 750px) and (orientation: landscape)";
+$lt-short-screen: "only screen and (max-height: 850px)";
+$ipad: "only screen and (min-device-width : 768px) and (max-device-width : 1024px)";
 
 // SCSS Mixins
 @mixin fill($position: absolute) {
@@ -27,4 +31,39 @@ $font-family: sans-serif;
     right: 0;
     left: 0;
     top: 0;
+}
+
+@mixin cinema-width {
+    max-width: $max-cinema;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// CSS vars
+:root {
+    --xlarge-gutter: 150px;
+    --large-gutter: 100px;
+    --medium-gutter: 60px;
+    --small-gutter: 20px;
+
+    --large-section-padding: 100px 100px 150px 100px;
+    --section-padding: 100px 60px;
+
+    --slideshow-titles-height: 375px;
+    --slideshow-titles-width: 500px;
+}
+
+@media #{$lt-tablet} {
+    :root {
+        --large-gutter: 60px;
+        --medium-gutter: 40px;
+    }
+}
+
+// Breakpoints
+@media #{$lt-phone} {
+    :root {
+        --medium-gutter: 20px;
+        --slideshow-titles-height: 300px;
+    }
 }

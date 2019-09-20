@@ -1,3 +1,4 @@
+<!-- QUESTION: Is it possible to use _shop-collecitons? Yes but it cant be same name as path-->
 <template>
     <site-loading v-if="$apollo.loading" />
 
@@ -5,25 +6,27 @@
         v-else
         :class="classes"
     >
-        <!-- <svg-logo-funkhaus /> -->
+        <!-- NOTE: Disabled on shop homepage per request -->
+        <!-- <shop-collection-menu :collections="collectionTitles" /> -->
 
         <grid-collection :products="filteredProducts" />
+
+        <!-- <site-footer /> -->
     </section>
 </template>
 
 <script>
 import _get from "lodash/get"
-import HomeQuery from "~/queries/HomeQuery.gql"
-
-import { Collections, CollectionByHandle } from "~/queries/ShopifyQuery.gql"
 
 import gridCollection from "~/components/grid/Collection"
 
+import { Collections, CollectionByHandle } from "~/queries/ShopifyQuery.gql"
+
 export default {
-    transition: "fade",
     components: {
         gridCollection
     },
+    transition: "fade",
     head() {
         return {
             title: _get(this, "page.title", ""),
@@ -33,18 +36,13 @@ export default {
                     name: "description",
                     property: "og:description",
                     content: _get(this, "page.excerpt", "")
-                },
-                {
-                    hid: "og:image",
-                    property: "og:image",
-                    content: _get(this, "page.featuredImage.sourceUrl", "")
                 }
             ]
         }
     },
     computed: {
         classes() {
-            return ["section", "section-home"]
+            return ["section", "page-shop"]
         },
         collectionHandle() {
             return _get(
@@ -66,17 +64,6 @@ export default {
         }
     },
     apollo: {
-        // page: {
-        //     query: HomeQuery,
-        //     variables() {
-        //         return {
-        //             uri: "/featured" // FYI you can't query home by just using '/'
-        //         }
-        //     },
-        //     update(data) {
-        //         return data
-        //     }
-        // },
         collections: {
             client: "shopify",
             query: Collections,
@@ -101,17 +88,11 @@ export default {
 </script>
 
 <style lang="scss">
-.section-home {
-    color: $black;
-    margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.page-shop {
+    background: $white;
 
-    // Breakpoints
-    // @media #{$lt-tablet} {
-    // }
+    .grid-collection {
+        margin-top: 20px;
+    }
 }
 </style>
