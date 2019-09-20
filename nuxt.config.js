@@ -35,6 +35,8 @@ export default {
      ** Plugins to load before mounting the App
      */
     plugins: [
+        { src: "~/plugins/global-component-loader.js" },
+        { src: "~/plugins/global-svg-loader.js" },
         { src: "~/plugins/google-gtag.client.js", mode: "client" },
         { src: "~/plugins/money-filter.js" },
         { src: "~/plugins/shopify.js", mode: "client" }

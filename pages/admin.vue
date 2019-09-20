@@ -19,7 +19,7 @@ export default {
             ""
         )
 
-        window.location = `${gqlEndpoint.split("/graphql")[0]}/wp-admin`
+        window.location = `${gqlEndpoint.split("/api")[0]}/admin`
     }
 }
 </script>
