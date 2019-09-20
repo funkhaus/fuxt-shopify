@@ -17,6 +17,9 @@ export default {
         link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }]
     },
 
+    /*
+     ** Include common CSS files into head
+     */
     css: ["~/styles/base.scss", "~/styles/transitions.scss"],
 
     /*
