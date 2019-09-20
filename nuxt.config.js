@@ -35,6 +35,7 @@ export default {
      ** Plugins to load before mounting the App
      */
     plugins: [
+        { src: "~/plugins/global-svg-loader.js" },
         { src: "~/plugins/google-gtag.client.js", mode: "client" },
         { src: "~/plugins/money-filter.js" },
         { src: "~/plugins/shopify.js", mode: "client" }
@@ -65,9 +66,7 @@ export default {
             default: {
                 httpEndpoint:
                     "http://stackhaus-backend.flywheelsites.com/graphql",
-                tokenName: "apollo-token",
-                persisting: false,
-                websocketsOnly: false
+                persisting: false
             },
             shopify: {
                 httpEndpoint:
@@ -79,9 +78,7 @@ export default {
                             "41df419c5323c953aa29bf90312e15a1"
                     }
                 },
-                tokenName: "apollo-token",
-                persisting: false,
-                websocketsOnly: false
+                persisting: false
             }
         }
     },
