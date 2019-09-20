@@ -1,5 +1,5 @@
 <template>
-    <site-loading v-if="$apollo.loading" />
+    <loading-icon v-if="$apollo.loading" />
 
     <section
         v-else
@@ -42,16 +42,16 @@
 </template>
 
 <script>
+// Helpers
 import _get from "lodash/get"
 import gql from "graphql-tag"
 
-import siteLoading from "~/components/site/Loading"
+// Components
 import cartProductTable from "~/components/cart/ProductTable"
 import cartBottomPanel from "~/components/cart/BottomPanel"
 
 export default {
     components: {
-        siteLoading,
         cartProductTable,
         cartBottomPanel
     },

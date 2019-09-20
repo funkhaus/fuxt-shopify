@@ -1,95 +1,62 @@
 <template>
-    <site-loading v-if="$apollo.loading" />
+    <loading-icon v-if="$apollo.loading" />
 
     <section
         v-else
         :class="classes"
     >
-        <!-- <svg-logo-funkhaus /> -->
+        <p>
+            This page queries all products in the "frontpage" collection
+        </p>
 
-        <grid-collection :products="filteredProducts" />
+        <block-product
+            v-for="(block, i) in products"
+            v-if="products"
+            :key="i"
+            :src="block.images"
+            :title="block.title"
+            :price="block.priceRange.minVariantPrice.amount"
+            :url="block.handle"
+            :description="block.description"
+            :available="block.availableForSale"
+        />
     </section>
 </template>
 
 <script>
+// Helpers
 import _get from "lodash/get"
-import HomeQuery from "~/queries/HomeQuery.gql"
 
-import { Collections, CollectionByHandle } from "~/queries/ShopifyQuery.gql"
+// Queries
+import { Collections, CollectionByHandle } from "~/queries/Shopify.gql"
 
-import gridCollection from "~/components/grid/Collection"
+// Components
+import blockProduct from "~/components/block/Product"
 
 export default {
     transition: "fade",
     components: {
-        gridCollection
-    },
-    head() {
-        return {
-            title: _get(this, "page.title", ""),
-            meta: [
-                {
-                    hid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: _get(this, "page.excerpt", "")
-                },
-                {
-                    hid: "og:image",
-                    property: "og:image",
-                    content: _get(this, "page.featuredImage.sourceUrl", "")
-                }
-            ]
-        }
+        blockProduct
     },
     computed: {
         classes() {
             return ["section", "section-home"]
         },
-        collectionHandle() {
-            return _get(
-                this,
-                "page.acfShopifyMeta.collectionHandle",
-                "frontpage"
-            )
-        },
         collectionImage() {
             return _get(this, "collection.image", {})
         },
-        filteredProducts() {
+        products() {
             let products = _get(this, "collection.products.edges", [])
-
             return products.map(product => product.node)
-        },
-        collectionTitles() {
-            return this.collections.map(collection => collection.node)
         }
     },
     apollo: {
-        // page: {
-        //     query: HomeQuery,
-        //     variables() {
-        //         return {
-        //             uri: "/featured" // FYI you can't query home by just using '/'
-        //         }
-        //     },
-        //     update(data) {
-        //         return data
-        //     }
-        // },
-        collections: {
-            client: "shopify",
-            query: Collections,
-            update(data) {
-                return _get(data, "collections.edges", {})
-            }
-        },
         collection: {
             client: "shopify",
             query: CollectionByHandle,
             variables() {
                 return {
-                    handle: this.collectionHandle
+                    handle: "frontpage"
                 }
             },
             update(data) {
@@ -104,10 +71,7 @@ export default {
 .section-home {
     color: $black;
     margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 100px 0;
     text-align: center;
 
     // Breakpoints

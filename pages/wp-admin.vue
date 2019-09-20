@@ -1,15 +1,15 @@
 <template>
-    <site-loading />
+    <loading-icon />
 </template>
 
 <script>
 import _get from "lodash/get"
-import siteLoading from "~/components/site/Loading"
+
 import config from "~/nuxt.config"
 
 export default {
     components: {
-        siteLoading
+        
     },
     transition: "fade",
     mounted() {

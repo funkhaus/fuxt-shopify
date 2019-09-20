@@ -44,7 +44,7 @@
 <script>
 import _get from "lodash/get"
 import _shuffle from "lodash/shuffle"
-import { CollectionByHandle } from "~/queries/ShopifyQuery.gql"
+import { CollectionByHandle } from "~/queries/Shopify.gql"
 
 export default {
     props: {

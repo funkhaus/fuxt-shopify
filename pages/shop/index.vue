@@ -1,6 +1,6 @@
 <!-- QUESTION: Is it possible to use _shop-collecitons? Yes but it cant be same name as path-->
 <template>
-    <site-loading v-if="$apollo.loading" />
+    <loading-icon v-if="$apollo.loading" />
 
     <section
         v-else
@@ -20,7 +20,7 @@ import _get from "lodash/get"
 
 import gridCollection from "~/components/grid/Collection"
 
-import { Collections, CollectionByHandle } from "~/queries/ShopifyQuery.gql"
+import { Collections, CollectionByHandle } from "~/queries/Shopify.gql"
 
 export default {
     components: {

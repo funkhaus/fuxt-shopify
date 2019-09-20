@@ -1,13 +1,9 @@
 <!-- This will be our App.vue -->
 <template>
     <main :class="classes">
-        <!-- Header goes here -->
-        <!-- <site-hamburger /> -->
-
         <site-icon-cart />
 
         <nuxt />
-        <!-- Footer goes here -->
     </main>
 </template>
 
@@ -22,43 +18,6 @@ import siteIconCart from "~/components/site/IconCart"
 export default {
     components: {
         siteIconCart
-    },
-    head() {
-        return {
-            bodyAttrs: {
-                class: "default-theme"
-            },
-            titleTemplate: titleChunk => {
-                let title = decodeHtmlEntity(titleChunk)
-                let site = decodeHtmlEntity(this.$store.state.siteMeta.title)
-                return title ? `${site} - ${title}` : site
-            },
-            meta: [
-                {
-                    hid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: this.$store.state.siteMeta.description
-                },
-                {
-                    hid: "og:image",
-                    property: "og:image",
-                    content: this.$store.state.siteMeta.themeScreenshotUrl
-                },
-                {
-                    property: "og:url",
-                    content: `${this.$store.state.siteMeta.host}${this.$route.path}`
-                },
-                {
-                    property: "og:site_name",
-                    content: this.$store.state.siteMeta.title
-                },
-                {
-                    property: "og:type",
-                    content: "website"
-                }
-            ]
-        }
     },
     data() {
         let output = {

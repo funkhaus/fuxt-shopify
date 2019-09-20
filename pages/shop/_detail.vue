@@ -5,7 +5,7 @@
             link="shop"
         /> -->
 
-        <site-loading v-if="$apollo.loading" />
+        <loading-icon v-if="$apollo.loading" />
 
         <div class="product-detail">
             <!-- <product-image-slideshow
@@ -110,9 +110,9 @@
 
 <script>
 import _get from "lodash/get"
-import { ProductByHandle } from "~/queries/ShopifyQuery.gql"
+import { ProductByHandle } from "~/queries/Shopify.gql"
 
-import siteLoading from "~/components/site/Loading"
+
 import shopRelatedProducts from "~/components/shop/RelatedProducts"
 import shopErrorMessage from "~/components/shop/ErrorMessage"
 // import productSocialShare from "~/components/product/productSocialShare"
@@ -132,7 +132,7 @@ export default {
         productSelectVariant,
         productPrice,
         productImageSingle,
-        siteLoading
+        
     },
     transition: "fade",
     data() {
