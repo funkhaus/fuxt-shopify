@@ -18,32 +18,18 @@ export default {
     },
 
     /*
-     ** Include common CSS files into head
-     */
-    css: ["~/styles/base.scss", "~/styles/transitions.scss"],
-
-    /*
      ** Plugins to load before mounting the App
      */
     plugins: [
         { src: "~/plugins/global-component-loader.js" },
-        { src: "~/plugins/global-svg-loader.js" },
-        { src: "~/plugins/google-gtag.client.js", mode: "client" },
-        { src: "~/plugins/money-filter.js" },
-        { src: "~/plugins/shopify.js", mode: "client" }
+        { src: "~/plugins/google-gtag.client.js", mode: "client" }
+        //{ src: "~/plugins/shopify.js", mode: "client" }
     ],
 
     /*
      ** Nuxt.js modules
      */
-    modules: ["@nuxtjs/apollo", "@nuxtjs/style-resources"],
-
-    /*
-     ** Load scss globally via styleResources
-     */
-    styleResources: {
-        scss: ["~/styles/_vars.scss"]
-    },
+    modules: ["@nuxtjs/apollo"],
 
     /*
      ** Apollo options. Used for Graph QL queries
@@ -77,24 +63,5 @@ export default {
     router: {
         linkExactActiveClass: "exact-active-link",
         linkActiveClass: "active-link"
-    },
-
-    /*
-     ** Build configuration
-     */
-    build: {
-        // This and the transpile code below fix an issue with the spread operator in Safari 10.
-        babel: {
-            plugins: ["transform-object-rest-spread"]
-        },
-        transpile: ["ky", "vuex"],
-        extend(config, ctx) {
-            // This is used by plugins/global-svg-loader.js
-            config.module.noParse = /\/assets\/svgs\/.+(svg$)/
-
-            // Includes the Compiler version of Vue.
-            // If you don't use the <wp-content> component, then you can delete this safely.
-            config.resolve.alias["vue$"] = "vue/dist/vue.esm.js"
-        }
     }
 }

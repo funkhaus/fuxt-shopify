@@ -1,0 +1,34 @@
+#import "~/gql/fragments/Shopify.gql"
+
+# SEE https://help.shopify.com/en/api/storefront-api/reference/mutation/checkoutcreate
+mutation CheckoutCreate($variantId: ID!, $quantity: Int!) {
+    checkoutCreate(
+        input: { lineItems: [{ variantId: $variantId, quantity: $quantity }] }
+    ) {
+        checkoutUserErrors {
+            code
+            message
+            field
+        }
+        checkout {
+            ...checkout
+        }
+    }
+}
+
+# SEE https://help.shopify.com/en/api/storefront-api/reference/mutation/checkoutlineitemsreplace
+mutation ReplaceCheckout(
+    $checkoutId: ID!
+    $lineItems: [CheckoutLineItemInput!]!
+) {
+    checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
+        userErrors {
+            code
+            message
+            field
+        }
+        checkout {
+            ...checkout
+        }
+    }
+}

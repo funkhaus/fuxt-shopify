@@ -1,0 +1,157 @@
+#import "~/gql/fragments/Shopify.gql"
+
+# query Shop {
+#     shop {
+#         name
+#         primaryDomain {
+#             url
+#             host
+#         }
+#     }
+# }
+
+# query ProductById($id: ID!) {
+#     node(id: $id) {
+#         id
+#         ... on Product {
+#             title
+#             descriptionHtml
+#             variants(first: 250) {
+#                 edges {
+#                     node {
+#                         price
+#                         title
+#                         availableForSale
+#                         id
+#                         vendor
+#                     }
+#                 }
+#             }
+#         }
+#     }
+# }
+#
+# query Products {
+#     products(first: 99) {
+#         edges {
+#             node {
+#                 id
+#                 title
+#             }
+#         }
+#     }
+# }
+
+# SEE https://help.shopify.com/en/api/storefront-api/reference/queryroot#productbyhandle-2019-07
+query ProductByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+        id
+        title
+        handle
+        productType
+        tags
+        description
+        descriptionHtml
+        availableForSale
+        vendor
+        images(first: 5) {
+            edges {
+                node {
+                    ...productImage
+                }
+            }
+        }
+        collections(first: 1) {
+            edges {
+                node {
+                    handle
+                    title
+                }
+            }
+        }
+        metafields(first: 5) {
+            edges {
+                node {
+                    description
+                    key
+                    value
+                    namespace
+                    id
+                }
+            }
+        }
+        priceRange {
+            ...priceRange
+        }
+        variants(first: 10) {
+            edges {
+                node {
+                    # metafields
+                    id
+                    compareAtPrice
+                    availableForSale
+                    price
+                    title
+                    image {
+                        ...productImage
+                    }
+                }
+            }
+        }
+    }
+}
+
+#SEE https://help.shopify.com/en/api/storefront-api/reference/queryroot#collections-2019-07
+query Collections($first: Int) {
+    collections(first: $first) {
+        edges {
+            node {
+                title
+                id
+                handle
+            }
+        }
+    }
+}
+
+# SEE https://help.shopify.com/en/api/storefront-api/reference/queryroot#collectionbyhandle-2019-07
+query CollectionByHandle($handle: String!) {
+    collectionByHandle(handle: $handle) {
+        id
+        title
+        handle
+        image {
+            ...productImage
+        }
+        products(first: 25) {
+            edges {
+                node {
+                    title
+                    id
+                    handle
+                    availableForSale
+                    description(truncateAt: 30)
+                    images(first: 5) {
+                        edges {
+                            node {
+                                ...productBlockImage
+                            }
+                        }
+                    }
+                    priceRange {
+                        ...priceRange
+                    }
+                }
+            }
+        }
+    }
+}
+
+# SEE https://help.shopify.com/en/api/storefront-api/reference/interface/node
+query CheckoutById($checkoutId: ID!) {
+    node(id: $checkoutId) {
+        ... on Checkout {
+            ...checkout
+        }
+    }
+}

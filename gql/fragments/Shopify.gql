@@ -1,0 +1,65 @@
+fragment lineItems on CheckoutLineItemConnection {
+    edges {
+        node {
+            id
+            title
+            quantity
+            variant {
+                id
+                title
+                priceV2 {
+                    amount
+                }
+                image {
+                    ...productBlockImage
+                }
+                product {
+                    title
+                    handle
+                    vendor
+                    id
+                }
+            }
+        }
+    }
+}
+
+fragment checkout on Checkout {
+    id
+    webUrl
+    completedAt
+    lineItems(first: 50) {
+        ...lineItems
+    }
+    subtotalPriceV2 {
+        amount
+        currencyCode
+    }
+    totalPriceV2 {
+        amount
+        currencyCode
+    }
+}
+
+fragment productImage on Image {
+    transformedSrc(maxWidth: 1920, maxHeight: 1920, crop: CENTER)
+    altText
+    id
+}
+
+fragment productBlockImage on Image {
+    transformedSrc(maxWidth: 600, maxHeight: 600, crop: CENTER)
+    altText
+    id
+}
+
+fragment priceRange on ProductPriceRange {
+    maxVariantPrice {
+        amount
+        currencyCode
+    }
+    minVariantPrice {
+        amount
+        currencyCode
+    }
+}

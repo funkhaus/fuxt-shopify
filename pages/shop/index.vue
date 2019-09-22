@@ -1,4 +1,3 @@
-<!-- QUESTION: Is it possible to use _shop-collecitons? Yes but it cant be same name as path-->
 <template>
     <loading-icon v-if="$apollo.loading" />
 
@@ -6,71 +5,58 @@
         v-else
         :class="classes"
     >
-        <!-- NOTE: Disabled on shop homepage per request -->
-        <!-- <shop-collection-menu :collections="collectionTitles" /> -->
+        <p>
+            This page queries all products in the "frontpage" collection. Better
+            to call this "featured" so URL looks better.
+        </p>
 
-        <grid-collection :products="filteredProducts" />
-
-        <!-- <site-footer /> -->
+        <shopify-block-product
+            v-for="(block, i) in products"
+            :key="i"
+            :images="block.images"
+            :title="block.title"
+            :price="block.priceRange.minVariantPrice"
+            :to="`/shop/${collectionHandle}/products/${block.handle}`"
+            :description="block.description"
+            :is-available="block.availableForSale"
+        />
     </section>
 </template>
 
 <script>
+// Helpers
 import _get from "lodash/get"
 
-import gridCollection from "~/components/grid/Collection"
+// Queries
+import { CollectionByHandle } from "~/gql/queries/Shopify.gql"
 
-import { Collections, CollectionByHandle } from "~/queries/Shopify.gql"
+// Components
+import shopifyBlockProduct from "~/components/shopify/BlockProduct"
 
 export default {
-    components: {
-        gridCollection
-    },
     transition: "fade",
-    head() {
+    components: {
+        shopifyBlockProduct
+    },
+    data() {
         return {
-            title: _get(this, "page.title", ""),
-            meta: [
-                {
-                    hid: "description",
-                    name: "description",
-                    property: "og:description",
-                    content: _get(this, "page.excerpt", "")
-                }
-            ]
+            collectionHandle: "frontpage"
         }
     },
     computed: {
         classes() {
-            return ["section", "page-shop"]
+            return ["section", "section-home"]
         },
-        collectionHandle() {
-            return _get(
-                this,
-                "page.acfShopifyMeta.collectionHandle",
-                "frontpage"
-            )
-        },
-        collectionImage() {
-            return _get(this, "collection.image", {})
-        },
-        filteredProducts() {
+        products() {
             let products = _get(this, "collection.products.edges", [])
-
             return products.map(product => product.node)
-        },
-        collectionTitles() {
-            return this.collections.map(collection => collection.node)
         }
     },
+    mounted() {
+        // TODO Fire off a this.gtag() for the view_item_list of all products
+        // SEE https://developers.google.com/analytics/devguides/collection/gtagjs/enhanced-ecommerce
+    },
     apollo: {
-        collections: {
-            client: "shopify",
-            query: Collections,
-            update(data) {
-                return _get(data, "collections.edges", {})
-            }
-        },
         collection: {
             client: "shopify",
             query: CollectionByHandle,
@@ -88,11 +74,9 @@ export default {
 </script>
 
 <style lang="scss">
-.page-shop {
-    background: $white;
-
-    .grid-collection {
-        margin-top: 20px;
-    }
+.section-home {
+    margin: 0 auto;
+    padding: 100px 0;
+    text-align: center;
 }
 </style>

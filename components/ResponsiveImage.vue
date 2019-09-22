@@ -9,6 +9,7 @@
                 class="media image"
                 :src="parsedSrc"
                 :style="mediaStyles"
+                :alt="parsedAlt"
                 @load="setLoaded('image')"
             >
             <video
@@ -139,9 +140,7 @@ export default {
             return this.src || this.image.sourceUrl
         },
         parsedAlt() {
-            if (this.alt) {
-                return this.alt || this.image.caption
-            }
+            return this.alt || _get(this, "image.caption", "")
         },
         parsedColor() {
             return (
