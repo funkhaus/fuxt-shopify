@@ -5,18 +5,54 @@
         v-else
         class="product-detail"
     >
-        <shopify-add-to-cart
-            variant-id="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMDExODIzMTgwMTkwOQ=="
-        />
+        <div class="images">
+            <img
+                v-for="(image, i) in images"
+                v-if="image.transformedSrc"
+                :key="i"
+                class="image"
+                :src="image.transformedSrc"
+                :alt="image.altText"
+            >
+        </div>
 
-        <!-- <update-quantity
-            variant-id="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMDExODIzMTgwMTkwOQ=="
-            :quantity="0"
-        />
+        <div class="content">
+            <h2
+                class="title"
+                v-html="product.title"
+            />
 
-        <button @click="getCheckout">
-            Get checkout
-        </button> -->
+            <shopify-price
+                :price-range="product.priceRange"
+                :variant-price="selectedVariant.priceV2"
+                :variant-sale-price="selectedVariant.compareAtPriceV2"
+            />
+
+            <shopify-select-variant
+                :variants="variants"
+                :select-first="false"
+                @selected-variant="setVariant"
+            />
+
+            <shopify-select-quantity @selected-quantity="setQuantity" />
+
+            <shopify-add-to-cart
+                :is-available="selectedVariant.availableForSale"
+                :variant-id="selectedVariant.id"
+                :variant-title="selectedVariant.title"
+                :product-title="product.title"
+                list-name="Product detail page"
+                :vendor="product.vendor"
+                :collection="$route.params.collection"
+                :quantity="selectedQuantity"
+                :price="selectedVariant.price"
+            />
+
+            <div
+                class="description"
+                v-html="product.descriptionHtml"
+            />
+        </div>
     </section>
 </template>
 
@@ -28,14 +64,44 @@ import _get from "lodash/get"
 import { ProductByHandle } from "~/gql/queries/Shopify.gql"
 
 // Components
+import shopifyPrice from "~/components/shopify/Price"
 import shopifyAddToCart from "~/components/shopify/AddToCart"
+import shopifySelectVariant from "~/components/shopify/SelectVariant"
+import shopifySelectQuantity from "~/components/shopify/SelectQuantity"
 
 export default {
     components: {
-        shopifyAddToCart
+        shopifySelectVariant,
+        shopifySelectQuantity,
+        shopifyAddToCart,
+        shopifyPrice
     },
     transition: "fade",
-    computed: {},
+    data() {
+        return {
+            selectedVariant: {},
+            selectedQuantity: 1
+        }
+    },
+    computed: {
+        images() {
+            let images = _get(this, "product.images.edges", [])
+            if (images) {
+                return images.map(image => image.node)
+            }
+        },
+        variants() {
+            return _get(this, "product.variants.edges", [])
+        }
+    },
+    methods: {
+        setVariant(variant) {
+            this.selectedVariant = variant
+        },
+        setQuantity(quantity) {
+            this.selectedQuantity = Number(quantity)
+        }
+    },
     apollo: {
         product: {
             client: "shopify",
@@ -62,11 +128,12 @@ export default {
     align-content: center;
     align-items: center;
 
+    fieldset,
     button {
-        margin-top: 100px;
+        margin: 10px 0;
     }
 
-    .product-images {
+    .images {
         width: 300px;
         margin-right: 20px;
 

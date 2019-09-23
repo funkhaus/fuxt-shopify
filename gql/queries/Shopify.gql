@@ -50,7 +50,6 @@ query ProductByHandle($handle: String!) {
         handle
         productType
         tags
-        description
         descriptionHtml
         availableForSale
         vendor
@@ -88,10 +87,16 @@ query ProductByHandle($handle: String!) {
                 node {
                     # metafields
                     id
-                    compareAtPrice
-                    availableForSale
-                    price
                     title
+                    availableForSale
+                    compareAtPriceV2 {
+                        amount
+                        currencyCode
+                    }
+                    priceV2 {
+                        amount
+                        currencyCode
+                    }
                     image {
                         ...productImage
                     }

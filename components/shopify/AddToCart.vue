@@ -1,7 +1,7 @@
 <template>
     <button
         class="shopify-add-to-cart"
-        :disabled="!isAvailable || loading"
+        :disabled="!isAvailable || loading || !variantId"
         @click="updateCart()"
     >
         <slot v-if="isAvailable">
@@ -21,7 +21,7 @@ export default {
     props: {
         variantId: {
             type: String,
-            required: true
+            default: ""
         },
         quantity: {
             type: Number,
@@ -51,7 +51,7 @@ export default {
         },
         listName: {
             type: String,
-            default: "Add to cart button"
+            default: "Product detail page"
         },
         listPosition: {
             type: Number,
@@ -75,9 +75,6 @@ export default {
                 { "not-available": !this.isAvailable }
             ]
         }
-    },
-    mounted() {
-        console.log(this.$options)
     },
     methods: {
         async updateCart() {
