@@ -17,17 +17,14 @@
     "dependencies": {
         "@nuxtjs/apollo": "^4.0.0-rc9",
         "core-js": "^2.6.9",
-        "fitvids": "^2.0.0",
         "graphql": "^14.4.2",
         "lodash": "^4.17.15",
         "node-fetch": "^2.4.1",
         "nuxt": "^2.9.1",
-        "sanitize-html": "^1.20.1",
+        "nuxt-vuex-localstorage": "^1.2.6",
         "vue-apollo": "^3.0.0-rc.2"
     },
     "devDependencies": {
-        "@nuxtjs/style-resources": "^0.1.2",
-        "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.2.3",
         "node-sass": "^4.12.0",

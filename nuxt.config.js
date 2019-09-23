@@ -29,7 +29,16 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: ["@nuxtjs/apollo"],
+    modules: [
+        "@nuxtjs/apollo",
+        [
+            "nuxt-vuex-localstorage",
+            {
+                localStorage: ["shopify"],
+                mode: "debug"
+            }
+        ]
+    ],
 
     /*
      ** Apollo options. Used for Graph QL queries

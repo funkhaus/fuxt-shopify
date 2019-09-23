@@ -27,7 +27,9 @@ export const state = () => ({
         count: 0,
         subTotal: {},
         lineItems: []
-    }
+    },
+    expire: 24 * 60, // 60 days
+    version: 1
 })
 
 // Define mutations
@@ -187,7 +189,8 @@ export const actions = {
             })
 
             // Check that this checkout wasn't completed already
-            const checkout = _get(response, "data.node.checkout", {})
+            const checkout = _get(response, "data.node", {})
+
             if (checkout.completedAt) {
                 commit("CLEAR_CHECKOUT")
             } else {

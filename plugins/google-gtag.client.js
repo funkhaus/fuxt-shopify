@@ -8,6 +8,7 @@ export default ({ store, app: { router, context } }, inject) => {
     // Abort if no codes
     if (!codes.length) {
         if (context.isDev) console.log("No Google Anlaytics tracking codes set")
+        inject("gtag", () => {})
         return
     }
 
