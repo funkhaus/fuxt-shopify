@@ -53,12 +53,12 @@ export default {
             },
             shopify: {
                 httpEndpoint:
-                    "https://shopwolfentertainment.myshopify.com/api/2019-07/graphql.json",
+                    "https://your-store-name-here.myshopify.com/api/2019-07/graphql.json",
                 httpLinkOptions: {
                     headers: {
                         "Content-Type": "application/json",
                         "X-Shopify-Storefront-Access-Token":
-                            "41df419c5323c953aa29bf90312e15a1"
+                            "12345678abcd"
                     }
                 },
                 persisting: false
